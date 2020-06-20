@@ -1,0 +1,5 @@
+#include "Pods/Target Support Files/Pods-Banks/Pods-Banks.dev debug.xcconfig"
+#include "Pods/Target Support Files/Pods-Banks/Pods-Banks.dev release.xcconfig"
+
+APP_ENVIRONMENT=dev
+APP_VERSION=1.0.0

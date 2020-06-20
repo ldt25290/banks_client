@@ -1,0 +1,15 @@
+[update]
+tasks = ["code", "normalize"]
+
+[update.code]
+codePath = "./App/Sources"
+localizablePath = "./App/Resources/Localizations/Strings"
+defaultToKeys = false
+additive = true
+unstripped = false
+
+[update.normalize]
+path = "."
+sourceLocale = "en"
+harmonizeWithSource = true
+sortByKeys = true

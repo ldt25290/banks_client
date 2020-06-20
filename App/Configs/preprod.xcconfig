@@ -1,0 +1,5 @@
+#include "Pods/Target Support Files/Pods-Banks/Pods-Banks.preprod debug.xcconfig"
+#include "Pods/Target Support Files/Pods-Banks/Pods-Banks.preprod release.xcconfig"
+
+APP_ENVIRONMENT=preprod
+APP_VERSION=1.0.0
