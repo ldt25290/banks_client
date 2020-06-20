@@ -1,0 +1,17 @@
+disabled_rules:
+  - vertical_parameter_alignment
+
+trailing_whitespace:
+  ignores_empty_lines: true
+  ignores_comments: true
+
+line_length: 150
+
+identifier_name:
+  min_length: 2
+
+excluded:
+  - Pods
+  - App/Generated
+  - Carthage
+  - App/Sources/Utils/ThirdParty
