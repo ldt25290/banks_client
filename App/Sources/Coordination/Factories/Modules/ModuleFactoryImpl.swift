@@ -11,3 +11,11 @@ extension ModuleFactoryImpl: AccountsModuleFactory {
         return controller
     }
 }
+
+extension ModuleFactoryImpl: DashboardModuleFactory {
+    func makeDashboardModuleOutput(container: Container) -> (Presentable) {
+        let controller = DashboardViewController.controllerInStoryboard(R.storyboard.dashboard())
+        
+        return controller
+    }
+}

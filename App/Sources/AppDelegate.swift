@@ -15,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             session.container = container
         }
         
+        Environment.apiHost
+        
         return true
     }
 

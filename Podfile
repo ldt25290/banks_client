@@ -6,6 +6,7 @@ target 'Banks' do
   pod 'R.swift'
   pod 'Swinject'
   pod 'SwinjectAutoregistration'
+  pod 'GRDB.swift'
 
 #  pod 'Firebase'
 #  pod 'FirebaseCrashlytics'

@@ -8,8 +8,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene),
             let container = session.container else { return }
         
-        print(session.container)
-        
         window = UIWindow(windowScene: windowScene)
         
         coordinator = AppCoordinator(window: window!,

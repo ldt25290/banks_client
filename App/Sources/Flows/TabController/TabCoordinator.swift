@@ -45,7 +45,7 @@ final class TabContainerCoordinator: BaseCoordinator, TabContainerCoordinatorOut
     private func assembleDashboard(on tabController: UITabBarController) -> UIViewController {
         let rootController = UINavigationController()
         
-        let coordinator = coordinatorFactory.makeAccountsCoordinatorOutput(container: container,
+        let coordinator = coordinatorFactory.makeDashboardCoordinatorOutput(container: container,
                                                                            rootController: rootController)
         
         addDependency(coordinator)

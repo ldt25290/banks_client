@@ -48,6 +48,7 @@ targets:
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
         CFBundleShortVersionString: $(APP_VERSION)
         APP_ENVIRONMENT: $(APP_ENVIRONMENT)
+        API_HOST: $(API_HOST)
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: NO
           UISceneConfigurations:

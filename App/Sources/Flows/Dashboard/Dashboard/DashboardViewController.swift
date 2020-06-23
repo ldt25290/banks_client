@@ -1,7 +1,6 @@
 import UIKit
 
-final class AccountsViewController: UIViewController {
-    
+final class DashboardViewController: UIViewController {
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         commonInit()
@@ -14,13 +13,13 @@ final class AccountsViewController: UIViewController {
     
     private func commonInit() {
         tabBarItem = UITabBarItem(title: R.string.localizable.accounts_screen_title(),
-                                  image: R.image.save(), tag: 0)
+                                  image: R.image.pieChart(), tag: 0)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = true
-        title = R.string.localizable.accounts_screen_title()
+        title = R.string.localizable.dashboard_screen_title()
     }
 }
