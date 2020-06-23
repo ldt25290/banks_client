@@ -2,11 +2,12 @@ platform :ios, '13.0'
 
 target 'Banks' do
   use_frameworks!
+  inhibit_all_warnings!
   
   pod 'R.swift'
   pod 'Swinject'
   pod 'SwinjectAutoregistration'
-  pod 'GRDB.swift'
+  pod 'GRDB.swift/SQLCipher'
 
 #  pod 'Firebase'
 #  pod 'FirebaseCrashlytics'

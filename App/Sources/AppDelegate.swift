@@ -5,17 +5,22 @@ import Swinject
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    private let container = AppDependencies.setup()
+    private var container: Container!
+    private var assembler: Assembler!
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 //        FirebaseApp.configure()
         
+        let (assembler, container) = AppDependencies.setup()
+        self.container = container
+        self.assembler = assembler
+        
+        let db = container.resolve(DatabaseService.self)
+        
         application.openSessions.forEach { session in
             session.container = container
         }
-        
-        Environment.apiHost
         
         return true
     }

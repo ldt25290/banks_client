@@ -5,10 +5,13 @@ final class ModuleFactoryImpl {
 }
 
 extension ModuleFactoryImpl: AccountsModuleFactory {
-    func makeAccountsModuleOutput(container: Container) -> (Presentable) {
-        let controller = AccountsViewController.controllerInStoryboard(R.storyboard.accounts())
+    func makeAccountsModuleOutput(container: Container) -> (AccountsModuleOutput, Presentable) {
+        let model = AccountsViewModelImpl()
         
-        return controller
+        let controller = AccountsViewController.controllerInStoryboard(R.storyboard.accounts())
+        controller.viewModel = model
+        
+        return (model, controller)
     }
 }
 

@@ -1,5 +1,23 @@
+"account_sort_bank_name" = "Bank Name";
+
+"account_sort_currency" = "Currency";
+
+"account_sort_none" = "No Grouping";
+
+"account_sort_selection_message" = "Select the accounts grouping style";
+
+"account_sort_selection_title" = "Accounts Grouping";
+
 /* No comment provided by engineer. */
 "accounts_screen_title" = "Accounts";
+
+"action_cancel" = "Cancel";
+
+"bank_name_monobank" = "Monobank";
+
+"bank_name_privatbank" = "Privatbank";
+
+"bank_name_ukrsibbank" = "UkrsibBank";
 
 /* No comment provided by engineer. */
 "dashboard_screen_title" = "Dashboard";

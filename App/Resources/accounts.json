@@ -1,0 +1,86 @@
+[
+  {
+    "currency": "UAH",
+    "is_credit": true,
+    "limit": 5000000,
+    "name": "black",
+    "id": "7w7Lnkfbl5DcZ90BWxf0xg",
+    "number": "537541*5990",
+    "bank": "monobank",
+    "updated_at": "2020-06-23T00:21:12.960544",
+    "balance": 4690774,
+    "created_at": "2020-06-23T00:21:12.960544"
+  },
+  {
+    "currency": "UAH",
+    "is_credit": false,
+    "limit": 0,
+    "name": "white",
+    "id": "_ITBmq7UoJmVA-wEK_DsrA",
+    "number": "537541*3787",
+    "bank": "monobank",
+    "updated_at": "2020-06-23T00:21:12.960544",
+    "balance": 1381076,
+    "created_at": "2020-06-23T00:21:12.960544"
+  },
+  {
+    "currency": "USD",
+    "is_credit": false,
+    "limit": 0,
+    "name": "Интернет карта",
+    "id": "D4731754OCKKLVQ33KF",
+    "number": "2886",
+    "bank": "privat",
+    "updated_at": "2020-06-23T00:21:10.222245",
+    "balance": 0,
+    "created_at": "2020-06-23T00:21:10.222245"
+  },
+  {
+    "currency": "UAH",
+    "is_credit": true,
+    "limit": 5000000,
+    "name": "Карта универсальная Голд",
+    "id": "A3948693TN9L3P3SVUK",
+    "number": "4897",
+    "bank": "privat",
+    "updated_at": "2020-06-23T00:21:10.222245",
+    "balance": 4966248,
+    "created_at": "2020-06-23T00:21:10.222245"
+  },
+  {
+    "currency": "EUR",
+    "is_credit": false,
+    "limit": 0,
+    "name": "Black edition card account",
+    "id": "1127671644",
+    "number": "UA40 3510 0500 0002 6209 8063 0998 7",
+    "bank": "ukrsibbank",
+    "updated_at": "2020-06-23T00:21:07.228806",
+    "balance": 0,
+    "created_at": "2020-06-23T00:21:07.228806"
+  },
+  {
+    "currency": "UAH",
+    "is_credit": false,
+    "limit": 0,
+    "name": "Black edition card account",
+    "id": "1127671642",
+    "number": "UA84 3510 0500 0002 6200 8063 0998 6",
+    "bank": "ukrsibbank",
+    "updated_at": "2020-06-23T00:21:07.228806",
+    "balance": 514257,
+    "created_at": "2020-06-23T00:21:07.228806"
+  },
+  {
+    "currency": "USD",
+    "is_credit": false,
+    "limit": 0,
+    "name": "Black edition card account",
+    "id": "1127671643",
+    "number": "UA58 3510 0500 0002 6208 8063 0998 8",
+    "bank": "ukrsibbank",
+    "updated_at": "2020-06-23T00:21:07.228806",
+    "balance": 0,
+    "created_at": "2020-06-23T00:21:07.228806"
+  }
+]

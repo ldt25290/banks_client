@@ -1,16 +1,20 @@
 PODS:
-  - GRDB.swift (4.14.0):
-    - GRDB.swift/standard (= 4.14.0)
-  - GRDB.swift/standard (4.14.0)
+  - GRDB.swift/SQLCipher (4.14.0):
+    - SQLCipher (>= 3.4.0)
   - R.swift (5.2.2):
     - R.swift.Library (~> 5.2.0)
   - R.swift.Library (5.2.0)
+  - SQLCipher (4.4.0):
+    - SQLCipher/standard (= 4.4.0)
+  - SQLCipher/common (4.4.0)
+  - SQLCipher/standard (4.4.0):
+    - SQLCipher/common
   - Swinject (2.7.1)
   - SwinjectAutoregistration (2.7.0):
     - Swinject (~> 2.7)
 
 DEPENDENCIES:
-  - GRDB.swift
+  - GRDB.swift/SQLCipher
   - R.swift
   - Swinject
   - SwinjectAutoregistration
@@ -20,6 +24,7 @@ SPEC REPOS:
     - GRDB.swift
     - R.swift
     - R.swift.Library
+    - SQLCipher
     - Swinject
     - SwinjectAutoregistration
 
@@ -27,9 +32,10 @@ SPEC CHECKSUMS:
   GRDB.swift: 8cc3ab7c8b8b4ac1761deb8dca4b51c1c9d429f8
   R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32
   R.swift.Library: 5ba4f1631300caf9a4d890186930da85d540769d
+  SQLCipher: e434ed542b24f38ea7b36468a13f9765e1b5c072
   Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
   SwinjectAutoregistration: 330f5012642a8b5c89a8a4adb0c5e52df07382c0
 
-PODFILE CHECKSUM: 950abfbbad667e5bcda2fa662955f12549a5eba3
+PODFILE CHECKSUM: 6f85a95541ea238a7f71eb634d0bd75c08b09606
 
 COCOAPODS: 1.9.3

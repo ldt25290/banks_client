@@ -1,5 +1,5 @@
 import Swinject
 
 protocol AccountsModuleFactory {
-    func makeAccountsModuleOutput(container: Container) -> (Presentable)
+    func makeAccountsModuleOutput(container: Container) -> (AccountsModuleOutput, Presentable)
 }

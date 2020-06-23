@@ -21,7 +21,7 @@ final class AccountsCoordinator: BaseCoordinator, AccountsCoordinatorOutput {
     }
     
     override func start() {
-        let presentable = moduleFactory.makeAccountsModuleOutput(container: container)
+        let (_, presentable) = moduleFactory.makeAccountsModuleOutput(container: container)
         
         router.setRootModule(presentable, hideBar: false)
     }
