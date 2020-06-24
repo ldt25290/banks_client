@@ -1,6 +1,4 @@
 import Foundation
 import GRDB
 
-protocol DatabaseService: class {
-    
-}
+protocol DatabaseService: AnyObject {}

@@ -2,7 +2,7 @@ enum Bank: String, Codable {
     case ukrsibbank
     case monobank
     case privat
-    
+
     var localized: String {
         switch self {
         case .ukrsibbank:

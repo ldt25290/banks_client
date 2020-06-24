@@ -9,7 +9,7 @@ struct BankAccount: Codable {
     let currency: Currency
     let limit: Balance
     let isCredit: Bool
-    
+
     enum CodingKeys: String, CodingKey {
         case id
         case bank
@@ -33,8 +33,8 @@ extension BankAccount {
         }
         return balance
     }
-    
+
     var balancePositive: Bool {
-        return !isCredit || balance >= limit
+        !isCredit || balance >= limit
     }
 }

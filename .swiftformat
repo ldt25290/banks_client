@@ -1,0 +1,6 @@
+--swiftversion 5.2
+--exclude Pods, **/Generated
+
+--header strip
+
+--disable trailingCommas
