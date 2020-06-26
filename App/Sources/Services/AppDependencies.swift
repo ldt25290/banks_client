@@ -12,7 +12,9 @@ struct AppDependencies {
         let assembler = Assembler(container: container)
 
         assembler.apply(assemblies: [
-            CoreDependencies()
+            CoreDependencies(),
+            WrapperDependencies(),
+            ViewModels()
         ])
 
         return (assembler, container)
@@ -29,5 +31,31 @@ struct CoreDependencies: Assembly {
         container.register(DatabaseService.self, factory: { _ in
             try! DatabaseServiceImpl()
         }).inObjectScope(.sessionScope)
+
+        container.register(NetworkService.self, factory: { _ in
+            NetworkServiceImpl()
+        }).inObjectScope(.sessionScope)
+
+        container.register(EventDispatcher.self, factory: { _ in
+            EventDispatcherImpl()
+        }).inObjectScope(.sessionScope)
+    }
+}
+
+struct WrapperDependencies: Assembly {
+    func assemble(container: Container) {
+        container.autoregister(AccountsService.self,
+                               initializer: AccountsServiceImpl.init)
+            .initCompleted { res, service in
+                let dispatcher = res.resolve(EventDispatcher.self)!
+                dispatcher.addListener(service)
+            }
+            .inObjectScope(.sessionScope)
+    }
+}
+
+struct ViewModels: Assembly {
+    func assemble(container: Container) {
+        container.autoregister((AccountsViewModel & AccountsModuleOutput).self, initializer: AccountsViewModelImpl.init)
     }
 }

@@ -3,8 +3,8 @@ import Swinject
 final class ModuleFactoryImpl {}
 
 extension ModuleFactoryImpl: AccountsModuleFactory {
-    func makeAccountsModuleOutput(container _: Container) -> (AccountsModuleOutput, Presentable) {
-        let model = AccountsViewModelImpl()
+    func makeAccountsModuleOutput(container: Container) -> (AccountsModuleOutput, Presentable) {
+        let model = container.resolve((AccountsViewModel & AccountsModuleOutput).self)!
 
         let controller = AccountsViewController.controllerInStoryboard(R.storyboard.accounts())
         controller.viewModel = model

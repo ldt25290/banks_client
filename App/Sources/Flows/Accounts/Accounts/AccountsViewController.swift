@@ -27,8 +27,20 @@ final class AccountsViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         title = R.string.localizable.accounts_screen_title()
 
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(AccountsViewController.refreshAccounts), for: .valueChanged)
+        contentCollectionView.refreshControl = refreshControl
+
         mediator = AccountsMediatorImpl(collectionView: contentCollectionView,
                                         viewModel: viewModel)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if isMovingToParent {
+            refreshAccounts()
+        }
     }
 
     @IBAction func sortAccounts(_: Any) {
@@ -49,5 +61,13 @@ final class AccountsViewController: UIViewController {
         controller.addAction(cancelAction)
 
         present(controller, animated: true, completion: nil)
+    }
+
+    @objc private func refreshAccounts() {
+        viewModel.refreshAccounts { [weak self] result in
+            self?.contentCollectionView.refreshControl?.endRefreshing()
+
+            print(result)
+        }
     }
 }

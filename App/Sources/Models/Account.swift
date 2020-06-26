@@ -1,6 +1,6 @@
 import GRDB
 
-struct BankAccount: Codable {
+struct BankAccount {
     let id: String
     let bank: Bank
     let number: String
@@ -9,7 +9,9 @@ struct BankAccount: Codable {
     let currency: Currency
     let limit: Balance
     let isCredit: Bool
+}
 
+extension BankAccount: Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case bank
@@ -22,9 +24,11 @@ struct BankAccount: Codable {
     }
 }
 
-extension BankAccount: TableRecord, MutablePersistableRecord, FetchableRecord {
+extension BankAccount: TableRecord, PersistableRecord, FetchableRecord {
     static let databaseTableName = "bank_accounts"
 }
+
+extension BankAccount: Equatable {}
 
 extension BankAccount {
     var realBalance: Balance {

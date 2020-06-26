@@ -15,8 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.container = container
         self.assembler = assembler
 
-        let db = container.resolve(DatabaseService.self)
-
         application.openSessions.forEach { session in
             session.container = container
         }
@@ -35,4 +33,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_: UIApplication, didDiscardSceneSessions _: Set<UISceneSession>) {}
+
+    func application(_: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        let dispatcher = container.resolve(EventDispatcher.self)
+        dispatcher?.dispatchEvent(.backgroundFetch, completion: { result in
+            switch result {
+            case .success:
+                completionHandler(.newData)
+            case .failure:
+                completionHandler(.failed)
+            }
+        })
+    }
 }

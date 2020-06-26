@@ -25,11 +25,13 @@ protocol AccountsViewModel: AnyObject {
     func numberOfSections() -> Int
     func numberOfItems(in section: Int) -> Int
     func cellModelForItem(at indexPath: IndexPath) -> AccountCellModel
+
+    func refreshAccounts(completion: @escaping (Result<Void, Error>) -> Void)
 }
 
 final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
     private let formatter: NumberFormatter
-    private let accounts: [BankAccount]
+    private var accounts: [BankAccount] = []
 
     private var grouping: AccountsGrouping = .bank
     private var groups: [String: [BankAccount]] = [:]
@@ -37,18 +39,33 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
 
     var onDataSourceChange: (() -> Void)?
 
-    // swiftlint:disable force_try
-    init() {
+    private let accountsService: AccountsService
+    private let db: DatabaseService
+
+    private var accountsListToken: DatabaseObserverToken?
+
+    init(accountsService: AccountsService, db: DatabaseService) {
+        self.accountsService = accountsService
+        self.db = db
+
         formatter = NumberFormatter()
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
         formatter.decimalSeparator = "."
 
-        let url = R.file.accountsJson()!
-        let data = try! Data(contentsOf: url)
-        accounts = try! JSONDecoder().decode([BankAccount].self, from: data)
+        accountsListToken = db.trackAccountsListChange { [weak self] accounts in
+            guard let self = self else { return }
 
-        applyGrouping(grouping, force: true)
+            DispatchQueue.main.async {
+                self.accounts = accounts
+                self.applyGrouping(self.grouping, force: true)
+                self.onDataSourceChange?()
+            }
+        }
+    }
+
+    deinit {
+        accountsListToken = nil
     }
 
     func numberOfSections() -> Int {
@@ -126,5 +143,13 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
         applyGrouping(grouping)
 
         onDataSourceChange?()
+    }
+
+    func refreshAccounts(completion: @escaping (Result<Void, Error>) -> Void) {
+        accountsService.updateAccounts { result in
+            DispatchQueue.main.async {
+                completion(result)
+            }
+        }
     }
 }
