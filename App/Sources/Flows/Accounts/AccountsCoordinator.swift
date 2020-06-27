@@ -19,8 +19,22 @@ final class AccountsCoordinator: BaseCoordinator, AccountsCoordinatorOutput {
     }
 
     override func start() {
-        let (_, presentable) = moduleFactory.makeAccountsModuleOutput(container: container)
+        showAccountsScreen()
+    }
+
+    private func showAccountsScreen() {
+        let (output, presentable) = moduleFactory.makeAccountsModuleOutput(container: container)
+
+        output.openTransactionsList = { [weak self] accountID in
+            self?.showTransactionsList(accountID: accountID)
+        }
 
         router.setRootModule(presentable, hideBar: false)
+    }
+
+    private func showTransactionsList(accountID: String) {
+        let (output, presentable) = moduleFactory.makeTransactionsModuleOutput(accountID: accountID, container: container)
+
+        router.push(presentable)
     }
 }

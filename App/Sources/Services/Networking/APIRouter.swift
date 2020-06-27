@@ -2,6 +2,7 @@ import Foundation
 
 enum API {
     case fetchAccounts
+    case fetchTransactions(params: Parameters)
 }
 
 extension API: TargetType {
@@ -17,12 +18,14 @@ extension API: TargetType {
         switch self {
         case .fetchAccounts:
             return "/api/accounts"
+        case .fetchTransactions:
+            return "/api/transactions"
         }
     }
 
     var method: HTTPMethod {
         switch self {
-        case .fetchAccounts:
+        case .fetchAccounts, .fetchTransactions:
             return .get
         }
     }
@@ -33,6 +36,8 @@ extension API: TargetType {
 
     var task: RequestTask? {
         switch self {
+        case let .fetchTransactions(params):
+            return .parameters(params, encoding: .url)
         default:
             return nil
         }

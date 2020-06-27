@@ -1,6 +1,8 @@
 import Foundation
 
-protocol AccountsModuleOutput: AnyObject {}
+protocol AccountsModuleOutput: AnyObject {
+    var openTransactionsList: ((String) -> Void)? { get set }
+}
 
 enum AccountsGrouping: CaseIterable {
     case currency
@@ -27,6 +29,8 @@ protocol AccountsViewModel: AnyObject {
     func cellModelForItem(at indexPath: IndexPath) -> AccountCellModel
 
     func refreshAccounts(completion: @escaping (Result<Void, Error>) -> Void)
+
+    func showTransactionsForAccount(at indexPath: IndexPath)
 }
 
 final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
@@ -38,6 +42,7 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
     private var sortedKeys: [String] = []
 
     var onDataSourceChange: (() -> Void)?
+    var openTransactionsList: ((String) -> Void)?
 
     private let accountsService: AccountsService
     private let db: DatabaseService
@@ -151,5 +156,15 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
                 completion(result)
             }
         }
+    }
+
+    func showTransactionsForAccount(at indexPath: IndexPath) {
+        let key = sortedKeys[indexPath.section]
+        guard let items = groups[key] else {
+            fatalError()
+        }
+
+        let account = items[indexPath.row]
+        openTransactionsList?(account.id)
     }
 }

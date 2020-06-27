@@ -34,6 +34,8 @@ struct Parser {
             do {
                 let data = try response.data()
 
+//                print(try JSONSerialization.jsonObject(with: data, options: .allowFragments))
+
                 if data.isEmpty {
                     throw SessionResponse.Error.emptyData
                 }
@@ -58,6 +60,7 @@ struct Parser {
                     throw apiError
                 }
             } catch {
+                print(error)
                 completion(.failure(error))
             }
         }

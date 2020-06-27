@@ -45,6 +45,12 @@ extension AccountsMediatorImpl: UICollectionViewDataSource {
     }
 }
 
+extension AccountsMediatorImpl: UICollectionViewDelegate {
+    func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.showTransactionsForAccount(at: indexPath)
+    }
+}
+
 extension AccountsMediatorImpl: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout _: UICollectionViewLayout,

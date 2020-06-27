@@ -11,6 +11,16 @@ extension ModuleFactoryImpl: AccountsModuleFactory {
 
         return (model, controller)
     }
+
+    func makeTransactionsModuleOutput(accountID: String?, container: Container) -> (TransactionsModuleOutput, Presentable) {
+        let model = container.resolve((TransactionsViewModel & TransactionsModuleOutput).self,
+                                      argument: accountID)!
+
+        let controller = TransactionsViewController.controllerInStoryboard(R.storyboard.accounts())
+        controller.viewModel = model
+
+        return (model, controller)
+    }
 }
 
 extension ModuleFactoryImpl: DashboardModuleFactory {

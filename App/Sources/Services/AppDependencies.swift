@@ -57,5 +57,10 @@ struct WrapperDependencies: Assembly {
 struct ViewModels: Assembly {
     func assemble(container: Container) {
         container.autoregister((AccountsViewModel & AccountsModuleOutput).self, initializer: AccountsViewModelImpl.init)
+
+        container.register((TransactionsViewModel & TransactionsModuleOutput).self) { res, accountID in
+            TransactionsViewModelImpl(accountID: accountID,
+                                      network: res.resolve(NetworkService.self)!)
+        }
     }
 }

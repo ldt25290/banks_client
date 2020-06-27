@@ -14,6 +14,18 @@ final class NetworkServiceImpl: NetworkService {
     func fetchAccounts(completion: @escaping (Result<AccountsResponse, Error>) -> Void) {
         request(target: API.fetchAccounts, completion: completion)
     }
+
+    func fetchTransactions(accountID: String?, cursor: String?, count: Int,
+                           completion: @escaping (Result<PaginatedResponse<BankTransaction>, Error>) -> Void) {
+        var params: Parameters = [:]
+        params["account_id"] = accountID
+        params["cursor"] = cursor
+        params["count"] = count
+
+        let target = API.fetchTransactions(params: params)
+
+        request(target: target, completion: completion)
+    }
 }
 
 private extension NetworkServiceImpl {

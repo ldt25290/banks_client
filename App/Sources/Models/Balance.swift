@@ -8,6 +8,10 @@ struct Balance {
     var doubleValue: Double {
         Double(rawValue) / 100.0
     }
+
+    var positive: Bool {
+        rawValue >= 0
+    }
 }
 
 extension Balance: Codable {
