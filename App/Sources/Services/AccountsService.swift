@@ -26,7 +26,12 @@ final class AccountsServiceImpl: AccountsService {
 }
 
 extension AccountsServiceImpl {
-    func handleEvent(_: Event, completion: @escaping (Result<Void, Error>) -> Void) {
-        updateAccounts(completion: completion)
+    func handleEvent(_ event: Event, completion: @escaping (Result<Void, Error>) -> Void) {
+        switch event {
+        case .backgroundFetch:
+            updateAccounts(completion: completion)
+        default:
+            completion(.success(Void()))
+        }
     }
 }

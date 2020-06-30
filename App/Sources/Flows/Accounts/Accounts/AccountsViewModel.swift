@@ -31,6 +31,8 @@ protocol AccountsViewModel: AnyObject {
     func refreshAccounts(completion: @escaping (Result<Void, Error>) -> Void)
 
     func showTransactionsForAccount(at indexPath: IndexPath)
+
+    func title(for section: Int) -> String
 }
 
 final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
@@ -49,7 +51,7 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
 
     private var accountsListToken: DatabaseObserverToken?
 
-    init(accountsService: AccountsService, db: DatabaseService) {
+    init(accountsService: AccountsService, db: DatabaseService, notifications: UserNotifications) {
         self.accountsService = accountsService
         self.db = db
 
@@ -67,6 +69,8 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
                 self.onDataSourceChange?()
             }
         }
+
+        notifications.registerNotifications()
     }
 
     deinit {
@@ -90,6 +94,10 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
 
         let account = items[indexPath.row]
         return AccountCellModel(account: account, formatter: formatter)
+    }
+
+    func title(for section: Int) -> String {
+        sortedKeys[section]
     }
 
     private func applyGrouping(_ grouping: AccountsGrouping, force: Bool = false) {
@@ -122,6 +130,10 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
         }
 
         for account in accounts {
+            if account.balance.isEmpty {
+                continue
+            }
+
             let key: String
 
             switch grouping {

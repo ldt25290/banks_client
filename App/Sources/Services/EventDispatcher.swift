@@ -9,13 +9,14 @@ typealias BackgroundFetchResult = (UIBackgroundFetchResult) -> Void
 
 enum Event {
     case backgroundFetch
+    case pushToken(Data)
 }
 
 protocol EventDispatcher: AnyObject {
     func addListener(_ listener: EventsListener)
     func removeListener(_ listener: EventsListener)
 
-    func dispatchEvent(_ event: Event, completion: @escaping (Result<Void, Error>) -> Void)
+    func dispatchEvent(_ event: Event, completion: ((Result<Void, Error>) -> Void)?)
 }
 
 final class EventDispatcherImpl: EventDispatcher {
@@ -48,11 +49,11 @@ final class EventDispatcherImpl: EventDispatcher {
         return listeners ?? []
     }
 
-    func dispatchEvent(_ event: Event, completion: @escaping (Result<Void, Error>) -> Void) {
+    func dispatchEvent(_ event: Event, completion: ((Result<Void, Error>) -> Void)?) {
         let listeners = self.listeners
 
         guard !listeners.isEmpty else {
-            completion(.success(Void()))
+            completion?(.success(Void()))
             return
         }
 
@@ -66,7 +67,7 @@ final class EventDispatcherImpl: EventDispatcher {
         }
 
         group.notify(queue: .main) {
-            completion(.success(Void()))
+            completion?(.success(Void()))
         }
     }
 }

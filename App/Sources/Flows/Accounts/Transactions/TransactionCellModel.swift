@@ -47,6 +47,12 @@ struct TransactionCellModel {
     }
 
     private func format(amount: Balance, currency: String) -> String {
+        var amount = amount
+
+        if !amountPositive, amount.rawValue > 0 {
+            amount.negate()
+        }
+
         let value = NSNumber(value: amount.doubleValue)
         let components = [formatter.string(from: value), currency]
 

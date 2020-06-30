@@ -32,11 +32,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
-    func application(_: UIApplication, didDiscardSceneSessions _: Set<UISceneSession>) {}
-
-    func application(_: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(_: UIApplication,
+                     performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         let dispatcher = container.resolve(EventDispatcher.self)
         dispatcher?.dispatchEvent(.backgroundFetch, completion: { result in
+            switch result {
+            case .success:
+                completionHandler(.newData)
+            case .failure:
+                completionHandler(.failed)
+            }
+        })
+    }
+
+    func application(_: UIApplication,
+                     didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        let dispatcher = container.resolve(EventDispatcher.self)
+        dispatcher?.dispatchEvent(.pushToken(deviceToken), completion: nil)
+    }
+
+    func application(_: UIApplication,
+                     didReceiveRemoteNotification userInfo: [AnyHashable: Any],
+                     fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        let notifications = container.resolve(UserNotifications.self)
+        notifications?.handleNotification(userInfo, completion: { result in
             switch result {
             case .success:
                 completionHandler(.newData)

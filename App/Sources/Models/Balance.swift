@@ -1,5 +1,5 @@
 struct Balance {
-    let rawValue: Int
+    private(set) var rawValue: Int
 
     init(value: Int) {
         rawValue = value
@@ -11,6 +11,14 @@ struct Balance {
 
     var positive: Bool {
         rawValue >= 0
+    }
+
+    mutating func negate() {
+        rawValue *= -1
+    }
+
+    var isEmpty: Bool {
+        rawValue == 0
     }
 }
 

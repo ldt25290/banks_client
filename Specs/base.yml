@@ -1,5 +1,6 @@
 name: banks-client
 settings:
+  DEVELOPMENT_TEAM: 9DW3W74C34
   IPHONEOS_DEPLOYMENT_TARGET: 13.0
   SWIFT_VERSION: 5.0
 
@@ -43,6 +44,7 @@ targets:
     info:
       path: ../App/Project/Info.plist
       properties:
+        UIBackgroundModes: [fetch, remote-notification]
         UILaunchStoryboardName: LaunchScreen
         ITSAppUsesNonExemptEncryption: NO
         UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
@@ -55,11 +57,15 @@ targets:
             UIWindowSceneSessionRoleApplication:
               - UISceneDelegateClassName: $(PRODUCT_MODULE_NAME).SceneDelegate
                 UISceneConfigurationName: Default Configuration
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: YES
+
 
     settings:
       base:
         TARGETED_DEVICE_FAMILY: 1
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        CODE_SIGN_ENTITLEMENTS: App/Project/app.entitlements
       configs:
         Dev:
           PRODUCT_BUNDLE_IDENTIFIER: com.nivanchikov.banks.dev

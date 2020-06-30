@@ -3,6 +3,7 @@ import Foundation
 enum API {
     case fetchAccounts
     case fetchTransactions(params: Parameters)
+    case registerPushToken(params: Parameters)
 }
 
 extension API: TargetType {
@@ -20,6 +21,8 @@ extension API: TargetType {
             return "/api/accounts"
         case .fetchTransactions:
             return "/api/transactions"
+        case .registerPushToken:
+            return "/api/push_tokens"
         }
     }
 
@@ -27,6 +30,8 @@ extension API: TargetType {
         switch self {
         case .fetchAccounts, .fetchTransactions:
             return .get
+        case .registerPushToken:
+            return .post
         }
     }
 
@@ -38,6 +43,8 @@ extension API: TargetType {
         switch self {
         case let .fetchTransactions(params):
             return .parameters(params, encoding: .url)
+        case let .registerPushToken(params):
+            return .parameters(params, encoding: .json)
         default:
             return nil
         }

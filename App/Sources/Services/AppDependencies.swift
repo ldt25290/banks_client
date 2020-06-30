@@ -51,6 +51,14 @@ struct WrapperDependencies: Assembly {
                 dispatcher.addListener(service)
             }
             .inObjectScope(.sessionScope)
+
+        container.autoregister(UserNotifications.self,
+                               initializer: UserNotificationsImpl.init)
+            .initCompleted { res, service in
+                let dispatcher = res.resolve(EventDispatcher.self)!
+                dispatcher.addListener(service)
+            }
+            .inObjectScope(.sessionScope)
     }
 }
 

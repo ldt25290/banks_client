@@ -26,6 +26,14 @@ final class NetworkServiceImpl: NetworkService {
 
         request(target: target, completion: completion)
     }
+
+    func registerPushToken(token: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        let params = ["token": token]
+
+        let target = API.registerPushToken(params: params)
+
+        request(target: target, completion: completion)
+    }
 }
 
 private extension NetworkServiceImpl {
@@ -44,6 +52,33 @@ private extension NetworkServiceImpl {
                 completion(.success(value[keyPath: keyPath]))
             case let .failure(error):
                 completion(.failure(error))
+            }
+        }
+    }
+
+    func request<Target>(target: Target,
+                         decoder: JSONDecoder? = nil,
+                         requestQueue: DispatchQueue = .global(),
+                         parsingQueue: DispatchQueue = .global(),
+                         responseQueue: DispatchQueue = .global(),
+                         completion: @escaping (Result<Void, Error>) -> Void) where Target: TargetType {
+        requestQueue.async {
+            do {
+                let request = try target.asURLRequest()
+
+                let task = self.session.dataTask(with: request, completion: { response in
+                    Parser.parse(response, decoder: decoder, queue: parsingQueue, completion: { parsed in
+                        responseQueue.async {
+                            completion(parsed)
+                        }
+                    })
+                })
+
+                task.resume()
+            } catch {
+                responseQueue.async {
+                    completion(.failure(error))
+                }
             }
         }
     }

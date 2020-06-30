@@ -26,6 +26,44 @@ struct SessionResponse {
 struct APIError: Error, Decodable {}
 
 struct Parser {
+    static func parse(_ response: SessionResponse,
+                      decoder: JSONDecoder? = nil,
+                      queue: DispatchQueue = .global(),
+                      completion: @escaping (Result<Void, Error>) -> Void) {
+        queue.async {
+            do {
+                let data = try response.data()
+
+                let jsonDecoder: JSONDecoder
+
+                if let providedDecoder = decoder {
+                    jsonDecoder = providedDecoder
+                } else {
+                    jsonDecoder = JSONDecoder()
+                    jsonDecoder.dateDecodingStrategy = .secondsSince1970
+                }
+
+                let validationResult = response.validate(statusCodes: 200 ..< 300)
+
+                if case .success = validationResult, data.isEmpty {
+                    completion(.success(Void()))
+                    return
+                }
+
+                switch validationResult {
+                case .success:
+                    completion(.success(Void()))
+                case .failure:
+                    let apiError = try jsonDecoder.decode(APIError.self, from: data)
+                    throw apiError
+                }
+            } catch {
+                print(error)
+                completion(.failure(error))
+            }
+        }
+    }
+
     static func parse<Output>(_ response: SessionResponse,
                               decoder: JSONDecoder? = nil,
                               queue: DispatchQueue = .global(),
@@ -33,8 +71,6 @@ struct Parser {
         queue.async {
             do {
                 let data = try response.data()
-
-//                print(try JSONSerialization.jsonObject(with: data, options: .allowFragments))
 
                 if data.isEmpty {
                     throw SessionResponse.Error.emptyData
