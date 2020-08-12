@@ -16,7 +16,8 @@ final class NetworkServiceImpl: NetworkService {
     }
 
     func fetchTransactions(accountID: String?, cursor: String?, count: Int,
-                           completion: @escaping (Result<PaginatedResponse<BankTransaction>, Error>) -> Void) {
+                           completion: @escaping (Result<PaginatedResponse<BankTransaction>, Error>) -> Void)
+    {
         var params: Parameters = [:]
         params["account_id"] = accountID
         params["cursor"] = cursor
@@ -43,7 +44,8 @@ private extension NetworkServiceImpl {
                                     requestQueue: DispatchQueue = .global(),
                                     parsingQueue: DispatchQueue = .global(),
                                     responseQueue: DispatchQueue = .global(),
-                                    completion: @escaping (Result<U, Error>) -> Void) where Target: TargetType, Output: Decodable {
+                                    completion: @escaping (Result<U, Error>) -> Void) where Target: TargetType, Output: Decodable
+    {
         request(target: target, decoder: decoder,
                 requestQueue: requestQueue, parsingQueue: parsingQueue,
                 responseQueue: responseQueue) { (result: Result<Output, Error>) in
@@ -61,7 +63,8 @@ private extension NetworkServiceImpl {
                          requestQueue: DispatchQueue = .global(),
                          parsingQueue: DispatchQueue = .global(),
                          responseQueue: DispatchQueue = .global(),
-                         completion: @escaping (Result<Void, Error>) -> Void) where Target: TargetType {
+                         completion: @escaping (Result<Void, Error>) -> Void) where Target: TargetType
+    {
         requestQueue.async {
             do {
                 let request = try target.asURLRequest()
@@ -88,7 +91,8 @@ private extension NetworkServiceImpl {
                                  requestQueue: DispatchQueue = .global(),
                                  parsingQueue: DispatchQueue = .global(),
                                  responseQueue: DispatchQueue = .global(),
-                                 completion: @escaping (Result<Output, Error>) -> Void) where Target: TargetType, Output: Decodable {
+                                 completion: @escaping (Result<Output, Error>) -> Void) where Target: TargetType, Output: Decodable
+    {
         requestQueue.async {
             do {
                 let request = try target.asURLRequest()

@@ -33,11 +33,12 @@ final class DatabaseServiceImpl: DatabaseService {
     }
 
     fileprivate func performWrite(_ block: @escaping DatabaseWriteBlock,
-                                  completion: @escaping (Result<Void, Error>) -> Void) {
+                                  completion: @escaping (Result<Void, Error>) -> Void)
+    {
         queue.async {
             do {
                 try self.dbPool.writeInTransaction(nil, block)
-                completion(.success(Void()))
+                completion(.success(()))
             } catch {
                 completion(.failure(error))
             }
@@ -45,7 +46,8 @@ final class DatabaseServiceImpl: DatabaseService {
     }
 
     fileprivate func performRead<T>(_ block: @escaping DatabaseReadBlock<T>,
-                                    completion: @escaping (Result<T, Error>) -> Void) {
+                                    completion: @escaping (Result<T, Error>) -> Void)
+    {
         queue.async {
             do {
                 let result = try self.dbPool.read(block)
@@ -58,7 +60,8 @@ final class DatabaseServiceImpl: DatabaseService {
 
     fileprivate func addObservation<T, Reducer>(_ observation: ValueObservation<Reducer>,
                                                 onChange: @escaping (T) -> Void) -> TransactionObserver
-        where Reducer: ValueReducer, Reducer.Value == T {
+        where Reducer: ValueReducer, Reducer.Value == T
+    {
         var mutObservation = observation
         mutObservation.scheduling = ValueScheduling.async(onQueue: .global(), startImmediately: true)
 
@@ -72,7 +75,8 @@ final class DatabaseServiceImpl: DatabaseService {
 
 extension DatabaseServiceImpl {
     func updateAccounts(_ accounts: [BankAccount],
-                        completion: @escaping (Result<Void, Error>) -> Void) {
+                        completion: @escaping (Result<Void, Error>) -> Void)
+    {
         performWrite({ db in
             for account in accounts {
                 try account.save(db)

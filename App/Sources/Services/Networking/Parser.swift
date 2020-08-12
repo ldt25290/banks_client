@@ -19,7 +19,7 @@ struct SessionResponse {
             return .failure(.invalidStatusCode)
         }
 
-        return .success(Void())
+        return .success(())
     }
 }
 
@@ -29,7 +29,8 @@ struct Parser {
     static func parse(_ response: SessionResponse,
                       decoder: JSONDecoder? = nil,
                       queue: DispatchQueue = .global(),
-                      completion: @escaping (Result<Void, Error>) -> Void) {
+                      completion: @escaping (Result<Void, Error>) -> Void)
+    {
         queue.async {
             do {
                 let data = try response.data()
@@ -46,13 +47,13 @@ struct Parser {
                 let validationResult = response.validate(statusCodes: 200 ..< 300)
 
                 if case .success = validationResult, data.isEmpty {
-                    completion(.success(Void()))
+                    completion(.success(()))
                     return
                 }
 
                 switch validationResult {
                 case .success:
-                    completion(.success(Void()))
+                    completion(.success(()))
                 case .failure:
                     let apiError = try jsonDecoder.decode(APIError.self, from: data)
                     throw apiError
@@ -67,7 +68,8 @@ struct Parser {
     static func parse<Output>(_ response: SessionResponse,
                               decoder: JSONDecoder? = nil,
                               queue: DispatchQueue = .global(),
-                              completion: @escaping (Result<Output, Error>) -> Void) where Output: Decodable {
+                              completion: @escaping (Result<Output, Error>) -> Void) where Output: Decodable
+    {
         queue.async {
             do {
                 let data = try response.data()

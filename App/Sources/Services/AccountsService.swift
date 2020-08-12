@@ -31,7 +31,7 @@ extension AccountsServiceImpl {
         case .backgroundFetch:
             updateAccounts(completion: completion)
         default:
-            completion(.success(Void()))
+            completion(.success(()))
         }
     }
 }

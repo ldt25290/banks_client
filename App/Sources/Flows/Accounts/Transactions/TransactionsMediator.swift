@@ -17,6 +17,8 @@ final class TransactionsMediatorImpl: NSObject, TransactionsMediator {
 
         super.init()
 
+        collectionView.setCollectionViewLayout(layout(), animated: false)
+
         collectionView.dataSource = self
         collectionView.delegate = self
 
@@ -27,25 +29,50 @@ final class TransactionsMediatorImpl: NSObject, TransactionsMediator {
         }
     }
 
-    static func transactionCellProvider(collectionView: UICollectionView,
-                                        indexPath: IndexPath,
-                                        model: TransactionCellModel) -> UICollectionViewCell? {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.transaction_cell,
-                                                      for: indexPath)
-        cell?.setup(with: model)
-        return cell
+    private func layout() -> UICollectionViewLayout {
+        UICollectionViewCompositionalLayout { [weak self] (section, _) -> NSCollectionLayoutSection? in
+            guard let self = self else {
+                return nil
+            }
+
+            let sectionType = self.viewModel.sectionType(for: section)
+
+            let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+            let groupSize: NSCollectionLayoutSize
+            let sectionInsets: NSDirectionalEdgeInsets
+            var supplementaryItems: [NSCollectionLayoutBoundarySupplementaryItem] = []
+
+            switch sectionType {
+            case .data:
+                groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .estimated(120.0))
+                sectionInsets = .init(top: 0.0, leading: 15.0, bottom: 0.0, trailing: 15.0)
+                supplementaryItems = [self.listHeader()]
+            case .loading:
+                groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                   heightDimension: .absolute(40.0))
+                sectionInsets = .zero
+            }
+
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            group.contentInsets = sectionInsets
+
+            let section = NSCollectionLayoutSection(group: group)
+            section.boundarySupplementaryItems = supplementaryItems
+
+            return section
+        }
     }
 
-    static func transactionHeaderProvider(collectionView: UICollectionView,
-                                          kind: String,
-                                          indexPath: IndexPath) -> UICollectionReusableView? {
-        guard kind == UICollectionView.elementKindSectionHeader else {
-            return nil
-        }
+    private func listHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(40.0))
 
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                     withReuseIdentifier: R.reuseIdentifier.transactions_list_header,
-                                                                     for: indexPath)
+        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize,
+                                                                 elementKind: UICollectionView.elementKindSectionHeader,
+                                                                 alignment: .top)
 
         return header
     }
@@ -65,10 +92,12 @@ extension TransactionsMediatorImpl: UICollectionViewDataSource {
 
         switch sectionType {
         case .data:
+            let rows = viewModel.numberOfItems(in: indexPath.section)
+
             let identifier = R.reuseIdentifier.transaction_cell
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath)
             let model = viewModel.cellModelForItem(at: indexPath)
-            cell?.setup(with: model)
+            cell?.setup(with: model, showSeparator: indexPath.row < rows - 1)
             return cell!
         case .loading:
             let identifier = R.reuseIdentifier.loading_cell
@@ -79,7 +108,8 @@ extension TransactionsMediatorImpl: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
-                        at indexPath: IndexPath) -> UICollectionReusableView {
+                        at indexPath: IndexPath) -> UICollectionReusableView
+    {
         guard kind == UICollectionView.elementKindSectionHeader else {
             return UICollectionReusableView()
         }
@@ -99,45 +129,11 @@ extension TransactionsMediatorImpl: UICollectionViewDataSource {
 extension TransactionsMediatorImpl: UICollectionViewDelegate {
     func collectionView(_: UICollectionView,
                         willDisplay _: UICollectionViewCell,
-                        forItemAt indexPath: IndexPath) {
+                        forItemAt indexPath: IndexPath)
+    {
         guard case .loading = viewModel.sectionType(for: indexPath.section) else {
             return
         }
         viewModel.loadMoreTransactions()
-    }
-}
-
-extension TransactionsMediatorImpl: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout _: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch viewModel.sectionType(for: indexPath.section) {
-        case .data:
-            return CGSize(width: collectionView.bounds.width - 30.0, height: 100)
-        case .loading:
-            return CGSize(width: collectionView.bounds.width, height: 40)
-        }
-    }
-
-    func collectionView(_: UICollectionView,
-                        layout _: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        switch viewModel.sectionType(for: section) {
-        case .data:
-            return UIEdgeInsets(top: 0.0, left: 15.0, bottom: 0.0, right: 15.0)
-        case .loading:
-            return .zero
-        }
-    }
-
-    func collectionView(_ collectionView: UICollectionView,
-                        layout _: UICollectionViewLayout,
-                        referenceSizeForHeaderInSection section: Int) -> CGSize {
-        switch viewModel.sectionType(for: section) {
-        case .data:
-            return CGSize(width: collectionView.bounds.width, height: 40)
-        default:
-            return .zero
-        }
     }
 }

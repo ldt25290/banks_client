@@ -69,7 +69,7 @@ final class TransactionsViewModelImpl: TransactionsViewModel, TransactionsModule
                 completion?(.failure(error))
             case let .success(response):
                 self?.handleTransactions(response, reset: reset)
-                completion?(.success(Void()))
+                completion?(.success(()))
             }
         }
     }

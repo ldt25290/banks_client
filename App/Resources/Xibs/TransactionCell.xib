@@ -16,13 +16,20 @@
                 <rect key="frame" x="0.0" y="0.0" width="326" height="158"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view alpha="0.20000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ej-MJ-LZk">
+                        <rect key="frame" x="15" y="157.5" width="311" height="0.5"/>
+                        <color key="backgroundColor" red="0.61568627450000002" green="0.79215686269999996" blue="0.98823529409999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="0.5" id="SrT-Nl-DEo"/>
+                        </constraints>
+                    </view>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="rcp-8V-cMq">
                         <rect key="frame" x="0.0" y="15" width="326" height="128"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="n4H-zc-W4t">
                                 <rect key="frame" x="0.0" y="0.0" width="169" height="41.5"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8W3-9s-dbM">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="740" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8W3-9s-dbM">
                                         <rect key="frame" x="0.0" y="0.0" width="169" height="19.5"/>
                                         <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                         <nil key="textColor"/>
@@ -70,8 +77,11 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="rcp-8V-cMq" firstAttribute="leading" secondItem="CZF-cf-mtO" secondAttribute="leading" id="Acp-A7-GQa"/>
+                    <constraint firstAttribute="trailing" secondItem="4ej-MJ-LZk" secondAttribute="trailing" id="Lpt-vX-3az"/>
                     <constraint firstAttribute="bottom" secondItem="rcp-8V-cMq" secondAttribute="bottom" constant="15" id="RiC-b1-sHe"/>
                     <constraint firstAttribute="trailing" secondItem="rcp-8V-cMq" secondAttribute="trailing" id="dqP-3Z-2Ye"/>
+                    <constraint firstAttribute="bottom" secondItem="4ej-MJ-LZk" secondAttribute="bottom" id="msr-Dd-nVO"/>
+                    <constraint firstItem="4ej-MJ-LZk" firstAttribute="leading" secondItem="CZF-cf-mtO" secondAttribute="leading" constant="15" id="qwx-we-ACn"/>
                     <constraint firstItem="rcp-8V-cMq" firstAttribute="top" secondItem="CZF-cf-mtO" secondAttribute="top" constant="15" id="r04-36-0BY"/>
                 </constraints>
             </collectionViewCellContentView>
@@ -82,6 +92,7 @@
                 <outlet property="amountLabel" destination="EdM-GA-5lD" id="DgA-NO-Nbj"/>
                 <outlet property="blockAmountLabel" destination="llZ-Uo-phv" id="nam-X3-vDi"/>
                 <outlet property="categoryLabel" destination="dUl-fe-35x" id="JwS-uI-WOE"/>
+                <outlet property="separator" destination="4ej-MJ-LZk" id="C5N-LM-5bm"/>
             </connections>
             <point key="canvasLocation" x="-24.637681159420293" y="164.0625"/>
         </collectionViewCell>

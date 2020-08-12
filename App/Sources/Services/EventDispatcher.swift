@@ -53,7 +53,7 @@ final class EventDispatcherImpl: EventDispatcher {
         let listeners = self.listeners
 
         guard !listeners.isEmpty else {
-            completion?(.success(Void()))
+            completion?(.success(()))
             return
         }
 
@@ -67,7 +67,7 @@ final class EventDispatcherImpl: EventDispatcher {
         }
 
         group.notify(queue: .main) {
-            completion?(.success(Void()))
+            completion?(.success(()))
         }
     }
 }

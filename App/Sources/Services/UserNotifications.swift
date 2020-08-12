@@ -34,17 +34,19 @@ final class UserNotificationsImpl: NSObject, UserNotifications {
     }
 
     fileprivate func registerPushToken(_ token: Data,
-                                       completion: @escaping (Result<Void, Error>) -> Void) {
+                                       completion: @escaping (Result<Void, Error>) -> Void)
+    {
         let formattedToken = token.map { String(format: "%02x", $0) }.joined()
         network.registerPushToken(token: formattedToken, completion: completion)
     }
 
     func handleNotification(_ notification: [AnyHashable: Any],
-                            completion: @escaping (Result<Void, Error>) -> Void) {
+                            completion: @escaping (Result<Void, Error>) -> Void)
+    {
         print("\(Date()) - \(notification)")
 
         guard let type = notification["type"] as? String else {
-            completion(.success(Void()))
+            completion(.success(()))
             return
         }
 
@@ -52,7 +54,7 @@ final class UserNotificationsImpl: NSObject, UserNotifications {
         case "refresh_accounts":
             dispatcher.dispatchEvent(.backgroundFetch, completion: completion)
         default:
-            completion(.success(Void()))
+            completion(.success(()))
         }
     }
 }
@@ -65,7 +67,7 @@ extension UserNotificationsImpl {
         case let .pushToken(token):
             registerPushToken(token, completion: completion)
         default:
-            completion(.success(Void()))
+            completion(.success(()))
         }
     }
 }

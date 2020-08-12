@@ -152,7 +152,7 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
     }
 
     func groupingOptions() -> [String] {
-        AccountsGrouping.allCases.map { $0.localized }
+        AccountsGrouping.allCases.map(\.localized)
     }
 
     func applyGroupingOption(at index: Int) {

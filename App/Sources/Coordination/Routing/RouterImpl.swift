@@ -62,7 +62,7 @@ class RouterImp: NSObject, Router {
     func push(_ module: Presentable?, transitioning delegate: (UINavigationControllerDelegate & UIViewControllerAnimatedTransitioning)?) {
         push(module, animated: true, hideBottomBar: false, transitioning: delegate, completion: { [weak self] in
             self?.rootController?.delegate = nil
-		})
+        })
     }
 
     func push(_ module: Presentable?, hideBottomBar: Bool) {
@@ -84,7 +84,8 @@ class RouterImp: NSObject, Router {
     // swiftlint:disable vertical_parameter_alignment
     func push(_ module: Presentable?, animated: Bool, hideBottomBar: Bool,
               transitioning delegate: (UINavigationControllerDelegate & UIViewControllerAnimatedTransitioning)? = nil,
-              completion: (() -> Void)?) {
+              completion: (() -> Void)?)
+    {
         guard
             let controller = module?.toPresent(),
             controller is UINavigationController == false

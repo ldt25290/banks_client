@@ -6,6 +6,7 @@ final class TransactionCell: UICollectionViewCell {
     @IBOutlet var amountLabel: UILabel!
     @IBOutlet var amountBadgeLabel: UIView!
     @IBOutlet var blockAmountLabel: UILabel!
+    @IBOutlet var separator: UIView!
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -16,7 +17,7 @@ final class TransactionCell: UICollectionViewCell {
         }
     }
 
-    func setup(with model: TransactionCellModel) {
+    func setup(with model: TransactionCellModel, showSeparator: Bool) {
         let amountColor = model.amountPositive ? R.color.positive_text() : R.color.negative_text()
         let amountBadgeColor = model.amountPositive ? R.color.positive_background() : R.color.negative_background()
 
@@ -28,5 +29,24 @@ final class TransactionCell: UICollectionViewCell {
 
         amountLabel.textColor = amountColor
         amountBadgeLabel.backgroundColor = amountBadgeColor
+
+        separator.isHidden = !showSeparator
+    }
+
+    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+        var frame = layoutAttributes.frame
+
+        let bounding = CGSize(width: frame.width, height: UIView.layoutFittingExpandedSize.height)
+
+        var size = contentView.systemLayoutSizeFitting(bounding,
+                                                       withHorizontalFittingPriority: .required,
+                                                       verticalFittingPriority: .fittingSizeLevel)
+
+        size.width = bounding.width
+        size.height = max(100.0, ceil(size.height))
+
+        frame.size = size
+        layoutAttributes.frame = frame
+        return layoutAttributes
     }
 }

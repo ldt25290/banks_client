@@ -32,12 +32,14 @@ extension AccountsMediatorImpl: UICollectionViewDataSource {
     }
 
     func collectionView(_: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
+                        numberOfItemsInSection section: Int) -> Int
+    {
         viewModel.numberOfItems(in: section)
     }
 
     func collectionView(_ collectionView: UICollectionView,
-                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
+    {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.account_cell, for: indexPath)!
 
         let cellModel = viewModel.cellModelForItem(at: indexPath)
@@ -47,7 +49,8 @@ extension AccountsMediatorImpl: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
-                        at indexPath: IndexPath) -> UICollectionReusableView {
+                        at indexPath: IndexPath) -> UICollectionReusableView
+    {
         guard kind == UICollectionView.elementKindSectionHeader else {
             fatalError()
         }
@@ -72,19 +75,22 @@ extension AccountsMediatorImpl: UICollectionViewDelegate {
 extension AccountsMediatorImpl: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout _: UICollectionViewLayout,
-                        sizeForItemAt _: IndexPath) -> CGSize {
+                        sizeForItemAt _: IndexPath) -> CGSize
+    {
         CGSize(width: collectionView.bounds.width - 30.0, height: 100)
     }
 
     func collectionView(_: UICollectionView,
                         layout _: UICollectionViewLayout,
-                        insetForSectionAt _: Int) -> UIEdgeInsets {
+                        insetForSectionAt _: Int) -> UIEdgeInsets
+    {
         UIEdgeInsets(top: 0.0, left: 15.0, bottom: 0.0, right: 15.0)
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         layout _: UICollectionViewLayout,
-                        referenceSizeForHeaderInSection _: Int) -> CGSize {
+                        referenceSizeForHeaderInSection _: Int) -> CGSize
+    {
         CGSize(width: collectionView.bounds.width, height: 40)
     }
 }
