@@ -8,6 +8,8 @@ target 'Banks' do
   pod 'Swinject'
   pod 'SwinjectAutoregistration'
   pod 'GRDB.swift/SQLCipher'
+  
+  pod 'Reveal-SDK'
 
 #  pod 'Firebase'
 #  pod 'FirebaseCrashlytics'

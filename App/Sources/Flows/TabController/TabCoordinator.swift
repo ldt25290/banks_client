@@ -36,6 +36,8 @@ final class TabContainerCoordinator: BaseCoordinator, TabContainerCoordinatorOut
             accountsController
         ]
 
+        controller.selectedIndex = 1
+        
         router.setRootModule(controller, hideBar: true)
         self.controller = controller
     }

@@ -1,4 +1,4 @@
-struct Balance {
+struct Balance: Hashable {
     private(set) var rawValue: Int
 
     init(value: Int) {
@@ -48,4 +48,9 @@ func - (left: Balance, right: Balance) -> Balance {
 
 func + (left: Balance, right: Balance) -> Balance {
     Balance(value: left.rawValue + right.rawValue)
+}
+
+// swiftlint:disable shorthand_operator
+func += (left: inout Balance, right: Balance) {
+    left = left + right
 }

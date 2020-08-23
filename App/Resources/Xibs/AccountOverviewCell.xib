@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="account_overview_cell" id="iFo-0c-gKV" customClass="AccountOverviewCell" customModule="Banks" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="4nb-Bo-7DZ">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="9d4-uO-KUy">
+                        <rect key="frame" x="15" y="15" width="120" height="110"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="INk-Wb-GBm">
+                                <rect key="frame" x="0.0" y="0.0" width="94.5" height="56"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="999" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="UAH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1XM-Yk-e8T">
+                                        <rect key="frame" x="0.0" y="0.0" width="39.5" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FHA-YA-xju">
+                                        <rect key="frame" x="0.0" y="26.5" width="94.5" height="29.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="-13000.00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLo-9G-RVT">
+                                                <rect key="frame" x="7" y="5" width="80.5" height="19.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                                <color key="textColor" name="system_black"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="DLo-9G-RVT" secondAttribute="trailing" constant="7" id="DKW-yu-t5m"/>
+                                            <constraint firstItem="DLo-9G-RVT" firstAttribute="top" secondItem="FHA-YA-xju" secondAttribute="top" constant="5" id="ILu-QA-KLo"/>
+                                            <constraint firstAttribute="bottom" secondItem="DLo-9G-RVT" secondAttribute="bottom" constant="5" id="iTi-lm-ra6"/>
+                                            <constraint firstItem="DLo-9G-RVT" firstAttribute="leading" secondItem="FHA-YA-xju" secondAttribute="leading" constant="7" id="qfn-wi-ok7"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="OY7-te-erv">
+                                <rect key="frame" x="0.0" y="71" width="57" height="39"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dyd-Un-lZ9">
+                                        <rect key="frame" x="0.0" y="0.0" width="57" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="54000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLE-fC-0hZ">
+                                        <rect key="frame" x="0.0" y="22" width="43.5" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" name="system_black"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="9d4-uO-KUy" secondAttribute="bottom" constant="15" id="N4v-xf-wBH"/>
+                    <constraint firstAttribute="trailing" secondItem="9d4-uO-KUy" secondAttribute="trailing" constant="15" id="Sdl-Dp-d4w"/>
+                    <constraint firstItem="9d4-uO-KUy" firstAttribute="leading" secondItem="4nb-Bo-7DZ" secondAttribute="leading" constant="15" id="vrL-Pu-uqw"/>
+                    <constraint firstItem="9d4-uO-KUy" firstAttribute="top" secondItem="4nb-Bo-7DZ" secondAttribute="top" constant="15" id="wri-5g-GXD"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="178" height="116"/>
+            <connections>
+                <outlet property="availableBalanceLabel" destination="dLE-fC-0hZ" id="HZf-tH-eUR"/>
+                <outlet property="currencyLabel" destination="1XM-Yk-e8T" id="66x-fV-KrV"/>
+                <outlet property="realBalanceBadgeView" destination="FHA-YA-xju" id="BCP-xq-Sla"/>
+                <outlet property="realBalanceLabel" destination="DLo-9G-RVT" id="ObI-LF-zaG"/>
+            </connections>
+            <point key="canvasLocation" x="-172" y="-33"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <namedColor name="system_black">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

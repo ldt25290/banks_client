@@ -18,6 +18,17 @@ enum AccountsGrouping: CaseIterable {
     }
 }
 
+enum AccountsSection {
+    case overview
+    case account
+}
+
+struct TotalAccountBalance: Hashable {
+    let currency: Currency
+    var available: Balance
+    var real: Balance
+}
+
 protocol AccountsViewModel: AnyObject {
     var onDataSourceChange: (() -> Void)? { get set }
 
@@ -26,7 +37,9 @@ protocol AccountsViewModel: AnyObject {
 
     func numberOfSections() -> Int
     func numberOfItems(in section: Int) -> Int
-    func cellModelForItem(at indexPath: IndexPath) -> AccountCellModel
+    func sectionType(for section: Int) -> AccountsSection
+    func balanceCellModelForItem(at indexPath: IndexPath) -> AccountOverviewCellModel
+    func accountCellModelForItem(at indexPath: IndexPath) -> AccountCellModel
 
     func refreshAccounts(completion: @escaping (Result<Void, Error>) -> Void)
 
@@ -38,8 +51,9 @@ protocol AccountsViewModel: AnyObject {
 final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
     private let formatter: NumberFormatter
     private var accounts: [BankAccount] = []
+    private var balances: [TotalAccountBalance] = []
 
-    private var grouping: AccountsGrouping = .bank
+    private var grouping: AccountsGrouping = .currency
     private var groups: [String: [BankAccount]] = [:]
     private var sortedKeys: [String] = []
 
@@ -65,6 +79,7 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
 
             DispatchQueue.main.async {
                 self.accounts = accounts
+                self.calculateBalances(for: accounts)
                 self.applyGrouping(self.grouping, force: true)
                 self.onDataSourceChange?()
             }
@@ -78,16 +93,35 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
     }
 
     func numberOfSections() -> Int {
-        sortedKeys.count
+        sortedKeys.count + 1
+    }
+
+    func sectionType(for section: Int) -> AccountsSection {
+        switch section {
+        case 0:
+            return .overview
+        default:
+            return .account
+        }
     }
 
     func numberOfItems(in section: Int) -> Int {
-        let key = sortedKeys[section]
-        return groups[key]?.count ?? 0
+        switch sectionType(for: section) {
+        case .overview:
+            return balances.count
+        case .account:
+            let key = sortedKeys[section - 1]
+            return groups[key]?.count ?? 0
+        }
+    }
+    
+    func balanceCellModelForItem(at indexPath: IndexPath) -> AccountOverviewCellModel {
+        let balance = balances[indexPath.row]
+        return AccountOverviewCellModel(balance: balance, formatter: formatter)
     }
 
-    func cellModelForItem(at indexPath: IndexPath) -> AccountCellModel {
-        let key = sortedKeys[indexPath.section]
+    func accountCellModelForItem(at indexPath: IndexPath) -> AccountCellModel {
+        let key = sortedKeys[indexPath.section - 1]
         guard let items = groups[key] else {
             fatalError()
         }
@@ -97,7 +131,41 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
     }
 
     func title(for section: Int) -> String {
-        sortedKeys[section]
+        sortedKeys[section - 1]
+    }
+    
+    private func calculateBalances(for accounts: [BankAccount]) {
+        var balances: [Currency: TotalAccountBalance] = [:]
+        
+        for account in accounts {
+            if var balance = balances[account.currency] {
+                balance.available += account.balance
+                balance.real += account.realBalance
+                balances[account.currency] = balance
+            } else {
+                balances[account.currency] = TotalAccountBalance(currency: account.currency,
+                                                                 available: account.balance,
+                                                                 real: account.realBalance)
+            }
+        }
+        
+        let sort: (String, String) -> Bool = { lhs, rhs in
+            let currencyCode = Locale.autoupdatingCurrent.currencyCode
+            
+            if lhs == currencyCode {
+                return true
+            }
+            if rhs == currencyCode {
+                return false
+            }
+            return lhs < rhs
+            
+        }
+        
+        self.balances = Array(balances.values)
+                            .sorted(by: { sort($0.currency.rawValue, $1.currency.rawValue) })
+        
+        print(self.balances)
     }
 
     private func applyGrouping(_ grouping: AccountsGrouping, force: Bool = false) {
@@ -171,7 +239,7 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
     }
 
     func showTransactionsForAccount(at indexPath: IndexPath) {
-        let key = sortedKeys[indexPath.section]
+        let key = sortedKeys[indexPath.section - 1]
         guard let items = groups[key] else {
             fatalError()
         }
