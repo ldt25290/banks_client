@@ -1,5 +1,5 @@
 PODS:
-  - GRDB.swift/SQLCipher (4.14.0):
+  - GRDB.swift/SQLCipher (5.0.1):
     - SQLCipher (>= 3.4.0)
   - R.swift (5.2.2):
     - R.swift.Library (~> 5.2.0)
@@ -32,7 +32,7 @@ SPEC REPOS:
     - SwinjectAutoregistration
 
 SPEC CHECKSUMS:
-  GRDB.swift: 8cc3ab7c8b8b4ac1761deb8dca4b51c1c9d429f8
+  GRDB.swift: 04965b2db24aa24d5a70b50755a0f559c0ec84de
   R.swift: 7c52cdc57a66840ffe6cbd8a823d732059d42a32
   R.swift.Library: 5ba4f1631300caf9a4d890186930da85d540769d
   Reveal-SDK: 5f94f14aff3d5f2a49f246edcd266fa4472679e9

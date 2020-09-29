@@ -114,7 +114,7 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
             return groups[key]?.count ?? 0
         }
     }
-    
+
     func balanceCellModelForItem(at indexPath: IndexPath) -> AccountOverviewCellModel {
         let balance = balances[indexPath.row]
         return AccountOverviewCellModel(balance: balance, formatter: formatter)
@@ -133,10 +133,10 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
     func title(for section: Int) -> String {
         sortedKeys[section - 1]
     }
-    
+
     private func calculateBalances(for accounts: [BankAccount]) {
         var balances: [Currency: TotalAccountBalance] = [:]
-        
+
         for account in accounts {
             if var balance = balances[account.currency] {
                 balance.available += account.balance
@@ -148,10 +148,10 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
                                                                  real: account.realBalance)
             }
         }
-        
+
         let sort: (String, String) -> Bool = { lhs, rhs in
             let currencyCode = Locale.autoupdatingCurrent.currencyCode
-            
+
             if lhs == currencyCode {
                 return true
             }
@@ -159,12 +159,11 @@ final class AccountsViewModelImpl: AccountsViewModel, AccountsModuleOutput {
                 return false
             }
             return lhs < rhs
-            
         }
-        
+
         self.balances = Array(balances.values)
-                            .sorted(by: { sort($0.currency.rawValue, $1.currency.rawValue) })
-        
+            .sorted(by: { sort($0.currency.rawValue, $1.currency.rawValue) })
+
         print(self.balances)
     }
 

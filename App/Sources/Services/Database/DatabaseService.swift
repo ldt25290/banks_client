@@ -59,16 +59,14 @@ final class DatabaseServiceImpl: DatabaseService {
     }
 
     fileprivate func addObservation<T, Reducer>(_ observation: ValueObservation<Reducer>,
-                                                onChange: @escaping (T) -> Void) -> TransactionObserver
+                                                onChange: @escaping (T) -> Void) -> DatabaseCancellable
         where Reducer: ValueReducer, Reducer.Value == T
     {
-        var mutObservation = observation
-        mutObservation.scheduling = ValueScheduling.async(onQueue: .global(), startImmediately: true)
-
-        let observer = mutObservation.start(in: dbPool,
-                                            onError: {
-                                                print("Observation error \($0)")
-                                            }, onChange: onChange)
+        let observer = observation.start(in: dbPool,
+                                         scheduling: .async(onQueue: .global()),
+                                         onError: {
+                                             print("Observation error \($0)")
+                                         }, onChange: onChange)
         return observer
     }
 }
@@ -86,7 +84,7 @@ extension DatabaseServiceImpl {
     }
 
     func trackAccountsListChange(onChange: @escaping ([BankAccount]) -> Void) -> DatabaseObserverToken {
-        let observation = BankAccount.observationForAll().removeDuplicates()
+        let observation = ValueObservation.tracking(BankAccount.fetchAll).removeDuplicates()
 
         let observer = addObservation(observation, onChange: onChange)
         return observer

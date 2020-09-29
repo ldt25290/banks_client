@@ -58,14 +58,13 @@ final class AccountsMediatorImpl: NSObject, AccountsMediator {
             let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
             layoutItem.contentInsets = .init(top: 0.0, leading: 5.0, bottom: 15.0, trailing: 5.0)
 
-            let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.4),
+            let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5),
                                                          heightDimension: .absolute(150))
 
             let layoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize,
-                                                                 subitem: layoutItem,
-                                                                 count: 1)
-            
-            
+                                                               subitem: layoutItem,
+                                                               count: 1)
+
             let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
             layoutSection.orthogonalScrollingBehavior = .continuous
 
@@ -73,11 +72,11 @@ final class AccountsMediatorImpl: NSObject, AccountsMediator {
 
             return layoutSection
         }
-        
+
 //        let config = UICollectionViewCompositionalLayoutConfiguration()
 //        config.interSectionSpacing = 20
 //        layout.configuration = config
-        
+
         return layout
     }
 
@@ -118,7 +117,7 @@ extension AccountsMediatorImpl: UICollectionViewDataSource {
             return cell
         case .overview:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: R.reuseIdentifier.account_overview_cell, for: indexPath)!
-            
+
             let cellModel = viewModel.balanceCellModelForItem(at: indexPath)
             cell.setup(model: cellModel)
             return cell

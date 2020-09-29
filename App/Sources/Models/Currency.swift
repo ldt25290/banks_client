@@ -3,6 +3,7 @@ enum Currency: String, Codable {
     case usd = "USD"
     case eur = "EUR"
     case rub = "RUB"
+    case lira  = "TRL"
 
     var localized: String {
         switch self {
@@ -14,6 +15,8 @@ enum Currency: String, Codable {
             return "USD"
         case .rub:
             return "RUB"
+        case .lira:
+            return "TRL"
         }
     }
 
